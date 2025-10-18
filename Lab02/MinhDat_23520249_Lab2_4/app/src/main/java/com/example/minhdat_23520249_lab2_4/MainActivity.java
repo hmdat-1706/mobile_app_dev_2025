@@ -6,22 +6,20 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
-
-// Import lớp ComponentActivity để tương thích với Theme Material 3
+import android.widget.Toast; // Thêm Toast để thông báo
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 
-// Kế thừa từ ComponentActivity thay vì AppCompatActivity
 public class MainActivity extends AppCompatActivity {
 
-    // Khai báo các biến cho thành phần giao diện (UI Components)
     private EditText etId, etFullName;
     private CheckBox cbIsManager;
     private Button btnAdd;
     private ListView lvEmployees;
 
-    // Khai báo các biến cho dữ liệu và Adapter
     private ArrayList<Employee> employees;
     private EmployeeAdapter adapter;
 
@@ -30,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Xử lý để nội dung không bị ActionBar che
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
         // Ánh xạ các biến với các View trong file XML bằng ID
         etId = findViewById(R.id.et_id);
         etFullName = findViewById(R.id.et_fullName);
@@ -37,11 +42,8 @@ public class MainActivity extends AppCompatActivity {
         btnAdd = findViewById(R.id.btn_add);
         lvEmployees = findViewById(R.id.lv_employees);
 
-        // 1. Khởi tạo danh sách và thêm dữ liệu mẫu (nếu có)
+        // 1. Khởi tạo danh sách
         employees = new ArrayList<>();
-        // Bạn có thể thêm dữ liệu mẫu tại đây để kiểm tra
-        // employees.add(new Employee("1", "Nguyễn Văn An", false));
-        // employees.add(new Employee("2", "Trần Thị Bích", true));
 
         // 2. Tạo Adapter với danh sách đã có dữ liệu
         adapter = new EmployeeAdapter(this, R.layout.item_employee, employees);
@@ -53,43 +55,31 @@ public class MainActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Gọi phương thức xử lý logic thêm nhân viên
                 addNewEmployee();
             }
         });
     }
 
-    /**
-     * Phương thức này xử lý logic thêm một nhân viên mới vào danh sách.
-     */
     private void addNewEmployee() {
-        // Lấy dữ liệu người dùng nhập từ các ô EditText
         String id = etId.getText().toString().trim();
         String fullName = etFullName.getText().toString().trim();
 
-        // Kiểm tra nếu người dùng chưa nhập ID hoặc tên thì không thêm
         if (id.isEmpty() || fullName.isEmpty()) {
-            return; // Dừng lại, không làm gì cả
+            Toast.makeText(this, "Vui lòng nhập đầy đủ ID và Tên", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        // Lấy trạng thái của CheckBox (được chọn hay không)
         boolean isManager = cbIsManager.isChecked();
 
-        // Tạo một đối tượng Employee mới từ dữ liệu đã lấy
+        // BỎ COMMENT CÁC DÒNG NÀY ĐỂ THÊM NHÂN VIÊN
         Employee employee = new Employee(id, fullName, isManager);
-        // Thêm đối tượng nhân viên mới vào danh sách
         employees.add(employee);
+        adapter.notifyDataSetChanged(); // Cập nhật lại giao diện ListView
 
-        // Thông báo cho adapter rằng dữ liệu đã thay đổi.
-        // Adapter sẽ tự động cập nhật lại ListView.
-        adapter.notifyDataSetChanged();
-
-        // Xóa trống các ô nhập liệu để chuẩn bị cho lần nhập tiếp theo
+        // Xóa dữ liệu cũ và focus lại ô ID
         etId.setText("");
         etFullName.setText("");
         cbIsManager.setChecked(false);
-
-        // Di chuyển con trỏ (focus) trở lại ô nhập ID để người dùng tiện nhập liệu
         etId.requestFocus();
     }
 }
