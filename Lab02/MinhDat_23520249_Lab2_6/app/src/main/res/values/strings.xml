@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MinhDat_23520249_Lab2_6</string>
+    <string name="id_label">ID:</string>
+    <string name="full_name_label">Full Name:</string>
+    <string name="is_manager_label">Is A Manager:</string>
+    <string name="staff_label">Staff</string>
+    <string name="add_button">Add</string>
+
+</resources>

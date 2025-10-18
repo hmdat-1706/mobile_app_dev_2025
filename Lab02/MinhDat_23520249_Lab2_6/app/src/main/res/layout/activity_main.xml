@@ -16,11 +16,10 @@
         android:text="ID:"
         android:textSize="20sp"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/et_id"
         app:layout_constraintRight_toRightOf="@+id/tv_fullname"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="@dimen/margin_base"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
         android:textColor="@color/black"
         />
 
@@ -29,10 +28,8 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="60dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_id"
         />
 
     <TextView
@@ -45,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/et_fullName"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="@dimen/margin_base"
+        android:layout_marginLeft="5dp"
         android:textColor="@color/black"
         />
 
@@ -81,13 +78,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
-    <ListView
-        android:id="@+id/lv_employees"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_employees"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_weight="1"
-        app:layout_constraintTop_toBottomOf="@id/btn_add"
+        tools:listitem="@layout/item_employee"
+        app:layout_constraintTop_toBottomOf="@+id/btn_add"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
