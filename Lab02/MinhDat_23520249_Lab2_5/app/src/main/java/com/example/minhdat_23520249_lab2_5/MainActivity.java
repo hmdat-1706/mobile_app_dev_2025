@@ -40,23 +40,23 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Ánh xạ View
+        //Ánh xạ View
         etDishName = findViewById(R.id.et_dish_name);
         spThumbnail = findViewById(R.id.sp_thumbnail);
         cbPromotion = findViewById(R.id.cb_promotion);
         btnAddDish = findViewById(R.id.btn_add_dish);
         gvDishes = findViewById(R.id.gv_dishes);
 
-        // Thiết lập Spinner
+        //Thiết lập Spinner
         thumbnailAdapter = new ThumbnailAdapter(this, Thumbnail.values());
         spThumbnail.setAdapter(thumbnailAdapter);
 
-        // Thiết lập GridView
+        //Thiết lập GridView
         dishList = new ArrayList<>();
         dishAdapter = new DishAdapter(this, dishList);
         gvDishes.setAdapter(dishAdapter);
 
-        // Xử lý sự kiện click cho nút "Add"
+        //Xử lý sự kiện click cho nút "Add"
         btnAddDish.setOnClickListener(v -> addNewDish());
     }
 
@@ -70,23 +70,23 @@ public class MainActivity extends AppCompatActivity {
         Thumbnail selectedThumbnail = (Thumbnail) spThumbnail.getSelectedItem();
         boolean hasPromotion = cbPromotion.isChecked();
 
-        // Tạo đối tượng Dish mới và thêm vào danh sách
+        //Tạo đối tượng Dish mới và thêm vào danh sách
         Dish newDish = new Dish(name, selectedThumbnail, hasPromotion);
         dishList.add(newDish);
 
-        // Cập nhật GridView
+        //Cập nhật GridView
         dishAdapter.notifyDataSetChanged();
 
-        // Reset các trường nhập liệu
+        //Reset các trường nhập liệu
         resetInputFields();
 
-        // Hiển thị thông báo
+        //Hiển thị thông báo
         Toast.makeText(this, "Added successfully", Toast.LENGTH_SHORT).show();
     }
 
     private void resetInputFields() {
         etDishName.setText("");
-        spThumbnail.setSelection(0); // Quay về thumbnail đầu tiên
+        spThumbnail.setSelection(0); //Quay về thumbnail đầu tiên
         cbPromotion.setChecked(false);
         etDishName.requestFocus();
     }

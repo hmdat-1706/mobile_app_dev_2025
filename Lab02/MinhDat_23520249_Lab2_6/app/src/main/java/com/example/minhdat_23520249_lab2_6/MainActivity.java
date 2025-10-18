@@ -28,29 +28,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Đoạn code này để nội dung không bị thanh trên cùng che (nếu có)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // 1. Ánh xạ View từ layout
+        //Ánh xạ View từ layout
         etId = findViewById(R.id.et_id);
         etFullName = findViewById(R.id.et_fullName);
         cbIsManager = findViewById(R.id.cb_isManager);
         btnAdd = findViewById(R.id.btn_add);
         rvEmployees = findViewById(R.id.rv_employees);
 
-        // 2. Khởi tạo danh sách và Adapter
+        //Khởi tạo danh sách và Adapter
         employeeList = new ArrayList<>();
         adapter = new EmployeeAdapter(this, employeeList);
 
-        // 3. Thiết lập cho RecyclerView
+        //Thiết lập cho RecyclerView
         rvEmployees.setAdapter(adapter);
         rvEmployees.setLayoutManager(new LinearLayoutManager(this));
 
-        // 4. Xử lý sự kiện khi nhấn nút "Add"
+        //Xử lý sự kiện khi nhấn nút "Add"
         btnAdd.setOnClickListener(v -> addNewEmployee());
     }
 
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         String id = etId.getText().toString().trim();
         String fullName = etFullName.getText().toString().trim();
 
-        // Kiểm tra dữ liệu đầu vào
+        //Kiểm tra dữ liệu đầu vào
         if (id.isEmpty() || fullName.isEmpty()) {
             Toast.makeText(this, "Please enter ID and Full Name", Toast.LENGTH_SHORT).show();
             return;
@@ -66,17 +65,17 @@ public class MainActivity extends AppCompatActivity {
 
         boolean isManager = cbIsManager.isChecked();
 
-        // Tạo đối tượng Employee mới
+        //Tạo đối tượng Employee mới
         Employee newEmployee = new Employee(id, fullName, isManager);
         employeeList.add(newEmployee);
 
-        // Thông báo cho Adapter biết có một item mới đã được thêm vào cuối danh sách
+        //Thông báo cho Adapter biết có một item mới đã được thêm vào cuối danh sách
         adapter.notifyItemInserted(employeeList.size() - 1);
 
-        // Tự động cuộn đến vị trí của nhân viên mới thêm
+        //Tự động cuộn đến vị trí của nhân viên mới thêm
         rvEmployees.scrollToPosition(employeeList.size() - 1);
 
-        // Xóa trắng các ô nhập liệu để chuẩn bị cho lần nhập tiếp theo
+        //Xóa trắng các ô nhập liệu để chuẩn bị cho lần nhập tiếp theo
         etId.setText("");
         etFullName.setText("");
         cbIsManager.setChecked(false);

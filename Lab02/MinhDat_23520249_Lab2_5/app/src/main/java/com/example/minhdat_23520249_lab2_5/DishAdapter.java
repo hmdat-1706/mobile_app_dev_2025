@@ -36,7 +36,7 @@ public class DishAdapter extends ArrayAdapter<Dish> {
             ivDishImage.setImageResource(dish.getThumbnail().getImg());
             tvDishName.setText(dish.getName());
 
-            // Marquee (chữ chạy) nếu tên quá dài
+            //Marquee (chữ chạy) nếu tên quá dài
             tvDishName.setSelected(true);
 
             if (dish.hasPromotion()) {

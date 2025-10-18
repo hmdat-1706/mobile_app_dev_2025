@@ -34,7 +34,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         Employee employee = employeeList.get(position);
         holder.tvFullName.setText(employee.getFullName());
 
-        // Xử lý hiển thị Staff/Icon Manager
+        //Xử lý hiển thị Staff/Icon Manager
         if (employee.isManager()) {
             holder.ivManager.setVisibility(View.VISIBLE);
             holder.tvStaff.setVisibility(View.GONE);
@@ -43,10 +43,10 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             holder.tvStaff.setVisibility(View.VISIBLE);
         }
 
-        // Xử lý đổi màu nền xen kẽ
+        //Xử lý đổi màu nền xen kẽ
         if (position % 2 == 0) { // Vị trí chẵn
             holder.itemLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
-        } else { // Vị trí lẻ
+        } else { //Vị trí lẻ
             holder.itemLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.light_blue));
         }
     }

@@ -1,4 +1,3 @@
-// File: ThumbnailAdapter.java
 package com.example.minhdat_23520249_lab2_5;
 
 import android.content.Context;
@@ -18,7 +17,7 @@ public class ThumbnailAdapter extends ArrayAdapter<Thumbnail> {
         super(context, 0, objects);
     }
 
-    // Hiển thị cho item được chọn trên Spinner
+    //Hiển thị cho item được chọn trên Spinner
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -35,7 +34,7 @@ public class ThumbnailAdapter extends ArrayAdapter<Thumbnail> {
         return convertView;
     }
 
-    // Hiển thị cho danh sách dropdown (dạng dialog)
+    //Hiển thị cho danh sách dropdown (dạng dialog)
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {

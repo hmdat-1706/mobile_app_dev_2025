@@ -1,7 +1,6 @@
-package com.example.minhdat_23520249_lab2_3; // Nhớ kiểm tra lại tên package
+package com.example.minhdat_23520249_lab2_3;
 
 import android.os.Bundle;
-import android.view.View; // THÊM IMPORT NÀY
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,24 +8,24 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge; // THÊM IMPORT NÀY
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets; // THÊM IMPORT NÀY
-import androidx.core.view.ViewCompat; // THÊM IMPORT NÀY
-import androidx.core.view.WindowInsetsCompat; // THÊM IMPORT NÀY
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Khai báo các biến View với tên giống hệt ID trong file XML
+    //Khai báo các biến View với tên giống hệt ID trong file XML
     private EditText et_ID;
     private EditText et_name;
     private RadioGroup rg_Type;
     private Button bt_Nhap;
     private ListView lv_NhanVien;
 
-    // Khai báo danh sách để lưu nhân viên và Adapter
+    //Khai báo danh sách để lưu nhân viên và Adapter
     private ArrayList<Employee> employeeList;
     private ArrayAdapter<Employee> adapter;
 
@@ -43,21 +42,21 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Ánh xạ các biến với ID tương ứng trong file XML
+        //Ánh xạ các biến với ID tương ứng trong file XML
         et_ID = findViewById(R.id.et_ID);
         et_name = findViewById(R.id.et_name);
         rg_Type = findViewById(R.id.rg_Type);
         bt_Nhap = findViewById(R.id.bt_Nhap);
         lv_NhanVien = findViewById(R.id.lv_NhanVien);
 
-        // Khởi tạo danh sách và Adapter
+        //Khởi tạo danh sách và Adapter
         employeeList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, employeeList);
 
-        // Gán Adapter cho ListView
+        //Gán Adapter cho ListView
         lv_NhanVien.setAdapter(adapter);
 
-        // Thiết lập sự kiện click cho nút "Nhập"
+        //Thiết lập sự kiện click cho nút "Nhập"
         bt_Nhap.setOnClickListener(view -> { // Đổi tên biến 'v' thành 'view' cho rõ nghĩa
             addNewEmployee();
         });
