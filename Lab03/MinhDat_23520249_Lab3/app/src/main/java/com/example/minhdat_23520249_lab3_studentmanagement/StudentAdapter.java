@@ -14,7 +14,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     private List<Student> studentList;
     private final OnItemClickListener listener;
 
-    // Interface để xử lý các sự kiện click
+    //Interface để xử lý các sự kiện click
     public interface OnItemClickListener {
         void onItemClick(Student student);
         void onEditClick(Student student);
@@ -44,13 +44,13 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         return studentList.size();
     }
 
-    // Cập nhật lại danh sách và giao diện
+    //Cập nhật lại danh sách và giao diện
     public void updateData(List<Student> newStudentList) {
         this.studentList = newStudentList;
         notifyDataSetChanged();
     }
 
-    // ViewHolder để giữ các View của một item
+    //ViewHolder để giữ các View của một item
     static class StudentViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvName;
         private final TextView tvStudentId;
@@ -65,12 +65,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             tvName.setText(student.getName());
             tvStudentId.setText("MSSV: " + student.getStudentId());
 
-            // Gán sự kiện cho cả item view
+            //Gán sự kiện cho cả item view
             itemView.setOnClickListener(v -> listener.onItemClick(student));
 
-            // Bắt sự kiện nhấn giữ (long click) để hiện menu Sửa/Xóa
+            //Bắt sự kiện nhấn giữ (long click) để hiện menu Sửa/Xóa
             itemView.setOnLongClickListener(v -> {
-                // Tạo một popup menu
+                //Tạo một popup menu
                 android.widget.PopupMenu popup = new android.widget.PopupMenu(itemView.getContext(), itemView);
                 popup.getMenuInflater().inflate(R.menu.menu_context, popup.getMenu());
                 popup.setOnMenuItemClickListener(item -> {
@@ -85,7 +85,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                     return false;
                 });
                 popup.show();
-                return true; // Đánh dấu sự kiện đã được xử lý
+                return true; //Đánh dấu sự kiện đã được xử lý
             });
         }
     }

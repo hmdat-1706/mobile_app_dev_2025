@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class EditActivity extends AppCompatActivity {
 
     private EditText etStudentId, etName, etEmail, etClassName;
-    private Button btnSave;
-    private Student studentToEdit; // Sinh viên cần sửa, null nếu là thêm mới
+    private Button btnSave, btnCancel;
+    private Student studentToEdit; //Sinh viên cần sửa, null nếu là thêm mới
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +24,10 @@ public class EditActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.et_email);
         etClassName = findViewById(R.id.et_class_name);
         btnSave = findViewById(R.id.btn_save);
+        btnCancel = findViewById(R.id.btn_cancel);
 
-        // Kiểm tra xem có dữ liệu sinh viên được gửi qua không (chế độ Sửa)
+
+        //Kiểm tra xem có dữ liệu sinh viên được gửi qua không (chế độ Sửa)
         if (getIntent().hasExtra("STUDENT_DATA")) {
             studentToEdit = (Student) getIntent().getSerializableExtra("STUDENT_DATA");
             setTitle("Sửa thông tin sinh viên");
@@ -34,7 +36,8 @@ public class EditActivity extends AppCompatActivity {
             setTitle("Thêm sinh viên mới");
         }
 
-        btnSave.setOnClickListener(v -> saveStudent());
+        btnSave.setOnClickListener(v -> saveStudent()); //Lưu thông tin sinh viên và quay về MainActivity
+        btnCancel.setOnClickListener(v -> finish()); //Đóng Activity và quay về MainActivity
     }
 
 
@@ -65,12 +68,12 @@ public class EditActivity extends AppCompatActivity {
         resultIntent.putExtra("className", className);
 
         if (studentToEdit != null) {
-            // Gửi ID của sinh viên cần sửa về
+            //Gửi ID của sinh viên cần sửa về
             resultIntent.putExtra("studentDbId", studentToEdit.getId());
         }
 
         setResult(Activity.RESULT_OK, resultIntent);
-        finish(); // Đóng Activity và quay về MainActivity
+        finish(); //Đóng Activity và quay về MainActivity
     }
 }
     

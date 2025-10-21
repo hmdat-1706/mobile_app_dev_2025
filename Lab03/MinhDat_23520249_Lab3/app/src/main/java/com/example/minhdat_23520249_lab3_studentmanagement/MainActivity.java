@@ -30,41 +30,29 @@ public class MainActivity extends AppCompatActivity {
     private List<Student> studentList;
     private DatabaseHelper dbHelper;
 
-    // --- SỬA LỖI 1: Không cần biến database toàn cục ---
-    // private SQLiteDatabase database;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Khởi tạo DatabaseHelper
+        //Khởi tạo DatabaseHelper
         dbHelper = new DatabaseHelper(this);
 
-        // Ánh xạ views
+        //Ánh xạ views
         rvStudents = findViewById(R.id.rv_students);
         fabAdd = findViewById(R.id.fab_add);
 
-        // Khởi tạo danh sách và thiết lập RecyclerView
+        //Khởi tạo danh sách và thiết lập RecyclerView
         studentList = new ArrayList<>();
         setupRecyclerView();
-
-        // --- SỬA LỖI 2: Tải dữ liệu lần đầu ở đây ---
         loadStudentsFromDb();
 
-        // Xử lý sự kiện cho nút Add
+        //Xử lý sự kiện cho nút Add
         fabAdd.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, EditActivity.class);
             addEditLauncher.launch(intent);
         });
     }
-
-    // --- SỬA LỖI 3: Xóa hoàn toàn phương thức onResume() ---
-    // @Override
-    // protected void onResume() {
-    //     super.onResume();
-    //     loadStudentsFromDb(); // Gây ra việc tải lại không cần thiết và lỗi layout
-    // }
 
     private void setupRecyclerView() {
         studentAdapter = new StudentAdapter(studentList, new StudentAdapter.OnItemClickListener() {
@@ -90,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadStudentsFromDb() {
-        // Lấy database chỉ khi cần dùng
+        //Lấy database chỉ khi cần dùng
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         studentList.clear();
         Cursor cursor = database.query(DatabaseHelper.TABLE_STUDENTS, null, null, null, null, null, DatabaseHelper.COLUMN_NAME + " ASC");
@@ -114,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             }
             cursor.close();
         }
-        // Cập nhật lại giao diện của Adapter
+        //Cập nhật lại giao diện của Adapter
         studentAdapter.updateData(studentList);
     }
 
@@ -125,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent data = result.getData();
                     long studentDbId = data.getLongExtra("studentDbId", -1);
 
-                    // Lấy database chỉ khi cần dùng
+                    //Lấy database chỉ khi cần dùng
                     SQLiteDatabase database = dbHelper.getWritableDatabase();
 
                     ContentValues values = new ContentValues();
@@ -136,22 +124,20 @@ public class MainActivity extends AppCompatActivity {
 
                     if (studentDbId == -1) {
                         database.insert(DatabaseHelper.TABLE_STUDENTS, null, values);
-                        Toast.makeText(this, "Thêm sinh viên thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Thêm thông tin sinh viên thành công", Toast.LENGTH_SHORT).show();
                     } else {
                         database.update(DatabaseHelper.TABLE_STUDENTS, values, DatabaseHelper.COLUMN_ID + "=?", new String[]{String.valueOf(studentDbId)});
-                        Toast.makeText(this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
                     }
-
-                    // --- SỬA LỖI 4: Chỉ tải lại dữ liệu sau khi đã thay đổi thành công ---
                     loadStudentsFromDb();
                 }
             });
 
     private void showStudentDetails(Student student) {
         new AlertDialog.Builder(this)
-                .setTitle("Chi tiết sinh viên")
+                .setTitle("Chi tiết thông tin sinh viên")
                 .setMessage("MSSV: " + student.getStudentId() +
-                        "\nHọ tên: " + student.getName() +
+                        "\nHọ và tên: " + student.getName() +
                         "\nEmail: " + student.getEmail() +
                         "\nLớp: " + student.getClassName())
                 .setPositiveButton("Đóng", null)
@@ -160,13 +146,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void confirmDeleteStudent(final Student student) {
         new AlertDialog.Builder(this)
-                .setTitle("Xác nhận xóa")
-                .setMessage("Bạn có chắc chắn muốn xóa sinh viên " + student.getName() + "?")
+                .setTitle("Xác nhận xóa sinh viên")
+                .setMessage("Bạn có chắc chắn muốn xóa thông tin sinh viên " + student.getName() + "?")
                 .setPositiveButton("Xóa", (dialog, which) -> {
                     SQLiteDatabase database = dbHelper.getWritableDatabase();
                     database.delete(DatabaseHelper.TABLE_STUDENTS, DatabaseHelper.COLUMN_ID + "=?", new String[]{String.valueOf(student.getId())});
-                    Toast.makeText(MainActivity.this, "Đã xóa sinh viên", Toast.LENGTH_SHORT).show();
-                    // Tải lại dữ liệu sau khi xóa
+                    Toast.makeText(MainActivity.this, "Đã xóa thông tin sinh viên", Toast.LENGTH_SHORT).show();
+                    //Tải lại dữ liệu sau khi xóa
                     loadStudentsFromDb();
                 })
                 .setNegativeButton("Hủy", null)
@@ -175,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        dbHelper.close(); // Đóng kết nối database khi ứng dụng tắt
+        dbHelper.close(); //Đóng kết nối database khi ứng dụng tắt
         super.onDestroy();
     }
 }
